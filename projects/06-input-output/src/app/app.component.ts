@@ -8,13 +8,15 @@ import { ListingComponent } from './listing/listing.component';
   template: `
     <h1>Saved Cars {{ savedCarList.length }}</h1>
     <section class="container">
-      <!-- This article element represents and entire listing -->
       @for(carEntry of carList;track carEntry){
-      <app-listing [car]="carEntry" />
+      <app-listing [car]="carEntry" (carSaved)="addCarToSaved($event)" />
       }
-
-      <!-- end car listing markup -->
     </section>
+    <article>
+      @for(savedCarEntry of savedCarList;track savedCarEntry){
+      <p>{{ savedCarEntry.make }} {{ savedCarEntry.model }}</p>
+      }
+    </article>
   `,
   styles: [],
   imports: [ListingComponent],
@@ -23,7 +25,7 @@ export class AppComponent {
   savedCarList: Car[] = [];
   carList: Car[] = [
     {
-      make: 'Foyoda',
+      make: 'kathmandu',
       model: 'Famery',
       miles: 54354,
       price: 1000,
@@ -31,7 +33,7 @@ export class AppComponent {
       transmission: 'Automatic',
     },
     {
-      make: 'Ronda',
+      make: 'pokhara',
       model: 'Disaccord',
       miles: 100000,
       price: 230,
@@ -55,4 +57,7 @@ export class AppComponent {
       transmission: 'Automatic',
     },
   ];
+  addCarToSaved(car: Car) {
+    this.savedCarList.push(car);
+  }
 }
